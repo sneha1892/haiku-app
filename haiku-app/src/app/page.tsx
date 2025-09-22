@@ -168,7 +168,7 @@ function HaikuApp() {
       </div>
 
       {/* Center Canvas - Current Haiku Display */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 pr-96">
         <HaikuDisplay haiku={currentHaiku} />
       </div>
     </div>

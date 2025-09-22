@@ -1,7 +1,13 @@
-import { Agent } from '@mastra/core';
+import { openai } from "@ai-sdk/openai";
+import { ENV } from "@mastra/core/env";
+import { Agent } from "@mastra/core/agent";
+
+console.log("🔍 Creating Mastra agent");
+console.log("🔑 OPENAI_API_KEY available:", !!process.env.OPENAI_API_KEY);
 
 export const haikuAgent = new Agent({
-  name: 'haikuAgent',
+  name: 'mastraAgent',
+  model: openai('gpt-4o'),
   instructions: `You are a helpful coordinator agent that works with frontend tools defined via CopilotKit's useCopilotAction system.
 
 Your role is to:
@@ -13,8 +19,15 @@ Your role is to:
 You should be conversational and helpful, always looking for ways to assist the user through the available frontend tools. When tools are executed, you should acknowledge their completion and explain the results to the user in a clear, friendly manner.
 
 Keep your responses concise but informative, and always aim to be helpful and responsive to user needs.`,
-  model: {
-    provider: 'OPEN_AI',
-    name: 'gpt-4o-mini',
-  },
+  
+server: {
+  // Disable CORS for development
+  cors: ENV === "development" ? {
+    origin: "*",
+    allowMethods: ["*"],
+    allowHeaders: ["*"],
+  } : undefined,
+},    
 });
+
+console.log("✅ Mastra agent created successfully");
